@@ -1,10 +1,12 @@
 ﻿using DroneControlSystem;
 Console.WriteLine("=== Система управления БПЛА (версия 1.0) ===\n");
+
 Drone[] drones = new Drone[]
 {
 new Drone("DJI Mini 3", 85),
 new Drone("Autel EVO Lite", 45),
-new Drone("Parrot Anafi", 15)
+new Drone("Parrot Anafi", 15),
+new Drone("DJI Mini 4")
 };
 for (int i = 0; i < drones.Length; i++)
 {
