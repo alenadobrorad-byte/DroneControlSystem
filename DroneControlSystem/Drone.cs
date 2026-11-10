@@ -36,4 +36,7 @@ public class Drone
         BatteryLevel -= 5;
         Console.WriteLine($"{Model} взлетел на высоту 10 м. Заряд: {BatteryLevel}%");
     }
+    public Drone(string model) : this(model, 100)
+    {
+    }
 }

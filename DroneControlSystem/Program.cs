@@ -2,6 +2,7 @@
 Console.WriteLine("=== Система управления БПЛА (версия 1.0) ===\n");
 // Создание объекта дрона с помощью конструктора
 Drone myDrone = new Drone("DJI Mini 3", 85);
+new Drone("DJI Mini 4");
 // Вывод информации
 myDrone.PrintInfo();
 Console.WriteLine();
