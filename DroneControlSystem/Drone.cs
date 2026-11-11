@@ -2,12 +2,23 @@
 
 public class Drone
 {
+    private const int BatteryConsumptionPerMinute = 2;
     // Поля класса (примитивные типы)
     public string Model { get; set; }
     public int BatteryLevel { get; set; } // заряд от 0 до 100
     public double Altitude { get; set; }   // высота в метрах
     public bool IsEngineOn { get; set; }
     // Конструктор
+    public int CalculateFlightTime()
+    {
+        if (!IsEngineOn)
+        {
+        
+        return 0;
+        Console.WriteLine("Двигатель выключен. Время полёта не может быть рассчитано.");
+        }
+        return BatteryLevel / BatteryConsumptionPerMinute;
+    }
     public Drone(string model, int batteryLevel)
     {
         Model = model;

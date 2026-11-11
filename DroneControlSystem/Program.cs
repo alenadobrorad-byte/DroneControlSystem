@@ -11,7 +11,11 @@ new Drone("DJI Mini 4")
 for (int i = 0; i < drones.Length; i++)
 {
     drones[i].PrintInfo();
-
+    if (drones[i].IsEngineOn)
+    {
+        int flightTime = drones[i].CalculateFlightTime();
+        Console.WriteLine($"Время полета: {flightTime} мин.");
+    }
     if (drones[i].BatteryLevel < 20)
     {
         Console.WriteLine("Низкий заряд");
