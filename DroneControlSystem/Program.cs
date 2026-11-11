@@ -1,5 +1,13 @@
 ﻿using DroneControlSystem;
-Console.WriteLine("=== Система управления БПЛА (версия 1.0) ===\n");
+Console.WriteLine("*******************************************");
+Console.WriteLine("*** Система управления БПЛА (версия 2.0) ***");
+Console.WriteLine("*******************************************");
+Console.Write("Введите команду (1 — взлёт, 2 — расчёт времени, 0 — выход): ");
+string input = Console.ReadLine();
+if (!int.TryParse(input, out int command))
+{
+    Console.WriteLine("Ошибка: введите число.");
+}
 
 Drone[] drones = new Drone[]
 {
@@ -28,4 +36,5 @@ for (int i = 0; i < drones.Length; i++)
     }
 }
 Console.WriteLine("Проверка завершена.");
-
+Mission mission = new Mission("Разведка", drones[0], 100);
+mission.Start();
