@@ -1,0 +1,119 @@
+[33mtag v3.0.0[m
+Tagger: alenadobrorad-byte <alenadobrorad@gmail.com>
+Date:   Thu Nov 12 09:59:00 2026 +0300
+
+Релиз 3.0.0: интерактивное меню и сохранение состояния
+
+[33mcommit 198d1087b19a024786c5da48811218c89deb51ae[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;33mtag: [m[1;33mv3.0.0[m[33m, [m[1;32mfeature/interactive-menu[m[33m)[m
+Author: alenadobrorad-byte <alenadobrorad@gmail.com>
+Date:   Thu Nov 12 09:51:47 2026 +0300
+
+    Добавлено интерактивное меню с выбором действий
+
+[1mdiff --git a/DroneControlSystem/Program.cs b/DroneControlSystem/Program.cs[m
+[1mindex 0e6bf68..750aa38 100644[m
+[1m--- a/DroneControlSystem/Program.cs[m
+[1m+++ b/DroneControlSystem/Program.cs[m
+[36m@@ -1,13 +1,7 @@[m
+[31m-﻿using DroneControlSystem;[m
+[31m-Console.WriteLine("*******************************************");[m
+[31m-Console.WriteLine("*** Система управления БПЛА (версия 2.0) ***");[m
+[31m-Console.WriteLine("*******************************************");[m
+[31m-Console.Write("Введите команду (1 — взлёт, 2 — расчёт времени, 0 — выход): ");[m
+[31m-string input = Console.ReadLine();[m
+[31m-if (!int.TryParse(input, out int command))[m
+[31m-{[m
+[31m-    Console.WriteLine("Ошибка: введите число.");[m
+[31m-}[m
+[32m+[m[32m﻿using System;[m
+[32m+[m[32musing System.IO;[m
+[32m+[m[32musing System.Collections.Generic;[m
+[32m+[m[32musing DroneControlSystem;[m
+ [m
+ Drone[] drones = new Drone[][m
+ {[m
+[36m@@ -16,29 +10,69 @@[m [mnew Drone("Autel EVO Lite", 45),[m
+ new Drone("Parrot Anafi", 15),[m
+ new Drone("DJI Mini 4")[m
+ };[m
+[31m-for (int i = 0; i < drones.Length; i++)[m
+[32m+[m
+[32m+[m[32mwhile (true)[m
+ {[m
+[31m-    drones[i].PrintInfo();[m
+[31m-    if (drones[i].IsEngineOn)[m
+[32m+[m[32m    Console.WriteLine("=== Система управления БПЛА (версия 3.0) ===");[m
+[32m+[m[32m    Console.WriteLine("1. Все дроны");[m
+[32m+[m[32m    Console.WriteLine("2. Взлёт");[m
+[32m+[m[32m    Console.WriteLine("3. Подзарядка");[m
+[32m+[m[32m    Console.WriteLine("4. Время полета");[m
+[32m+[m[32m    Console.WriteLine("0. Выход");[m
+[32m+[m
+[32m+[m
+[32m+[m[32m    if (!int.TryParse(Console.ReadLine(), out int c))[m
+     {[m
+[31m-        int flightTime = drones[i].CalculateFlightTime();[m
+[31m-        Console.WriteLine($"Время полета: {flightTime} мин.");[m
+[32m+[m[32m        Console.WriteLine("Введите число.");[m
+[32m+[m[32m        continue;[m
+     }[m
+[31m-    if (drones[i].BatteryLevel < 20)[m
+[32m+[m
+[32m+[m[32m    if (c == 0)[m
+[32m+[m[32m        break;[m
+[32m+[m
+[32m+[m[32m    if (c == 1)[m
+     {[m
+[31m-        Console.WriteLine("Низкий заряд");[m
+[32m+[m[32m        foreach (Drone d in drones)[m
+[32m+[m[32m            d.PrintInfo();[m
+     }[m
+[31m-    if (drones[i].BatteryLevel < 50)[m
+[32m+[m
+[32m+[m[32m    if (c >= 2 && c <= 4)[m
+     {[m
+[31m-        Console.WriteLine("Заряд меньше 50%. Подзарядить? (да/нет)");[m
+[31m-        string a = Console.ReadLine();[m
+[32m+[m[32m        Console.WriteLine("Номер дрона (1-4):");[m
+[32m+[m
+[32m+[m[32m        if (!int.TryParse(Console.ReadLine(), out int n)[m
+[32m+[m[32m            || n < 1 || n > drones.Length)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            Console.WriteLine("Неверный номер!");[m
+[32m+[m[32m            continue;[m
+[32m+[m[32m        }[m
+[32m+[m[32m        Drone d = drones[n - 1];[m
+[32m+[m
+[32m+[m[32m        if (c == 2) d.TakeOff();[m
+[32m+[m
+[32m+[m[32m        if (c == 3)[m
+[32m+[m[32m        {[m
+[32m+[m[32m            Console.WriteLine("Сколько зарядить?");[m
+[32m+[m[32m            if (int.TryParse(Console.ReadLine(), out int a) && a > 0)[m
+[32m+[m[32m            {[m
+[32m+[m[32m                d.ChargeBattery(a);[m
+[32m+[m[32m            }[m
+[32m+[m[32m            else[m
+[32m+[m[32m            {[m
+[32m+[m[32m                Console.WriteLine("Неверный заряд!");[m
+[32m+[m[32m            }[m
+[32m+[m[32m        }[m
+ [m
+[31m-        if (a == "да")[m
+[32m+[m[32m        if (c == 4)[m
+         {[m
+[31m-            drones[i].ChargeBattery(60);[m
+[32m+[m[32m            Console.WriteLine(d.CalculateFlightTime());[m
+         }[m
+     }[m
+[32m+[m
+[32m+[m[32m    if (c < 0 || c > 4)[m
+[32m+[m[32m    {[m
+[32m+[m[32m        Console.WriteLine("Нет такой команды!");[m
+[32m+[m[32m    }[m
+ }[m
+[31m-Console.WriteLine("Проверка завершена.");[m
+[31m-Mission mission = new Mission("Разведка", drones[0], 100);[m
+[31m-mission.Start();[m
+[41m+[m
+[41m+[m
