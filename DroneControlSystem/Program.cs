@@ -1,7 +1,25 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
 using DroneControlSystem;
+=======
+﻿using DroneControlSystem;
+using System.Text.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+Console.WriteLine("*******************************************");
+Console.WriteLine("*** Система управления БПЛА (версия 2.0) ***");
+Console.WriteLine("*******************************************");
+Console.Write("Введите команду (1 — взлёт, 2 — расчёт времени, 0 — выход): ");
+string input = Console.ReadLine();
+if (!int.TryParse(input, out int command))
+{
+    Console.WriteLine("Ошибка: введите число.");
+}
+>>>>>>> feature/save-load
 
 Drone[] drones = new Drone[]
 {
