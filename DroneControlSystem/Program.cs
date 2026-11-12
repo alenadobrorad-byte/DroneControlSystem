@@ -1,4 +1,9 @@
 ﻿using DroneControlSystem;
+using System.Text.Json;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 Console.WriteLine("*******************************************");
 Console.WriteLine("*** Система управления БПЛА (версия 2.0) ***");
 Console.WriteLine("*******************************************");
